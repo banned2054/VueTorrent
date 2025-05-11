@@ -14,7 +14,7 @@ const {statusFilter} = storeToRefs(useTorrentStore())
 const downloadingStates = [TorrentState.DOWNLOADING, TorrentState.DL_FORCED]
 const uploadingStates = [TorrentState.UPLOADING, TorrentState.UL_FORCED]
 
-function removeFilter() {f
+function removeFilter() {
   statusFilter.value = []
 }
 
