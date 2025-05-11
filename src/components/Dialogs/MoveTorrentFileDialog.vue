@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { useDialog } from '@/composables'
-import { useContentStore } from '@/stores'
-import { nextTick, onBeforeMount, reactive, ref } from 'vue'
-import { useI18nUtils } from '@/composables'
-import { VForm } from 'vuetify/components/VForm'
+import {useDialog} from '@/composables'
+import {useContentStore} from '@/stores'
+import {nextTick, onBeforeMount, reactive, ref} from 'vue'
+import {useI18nUtils} from '@/composables'
+import {VForm} from 'vuetify/components/VForm'
 
 const props = defineProps<{
   guid: string
@@ -12,8 +12,8 @@ const props = defineProps<{
   oldName: string
 }>()
 
-const { isOpened } = useDialog(props.guid)
-const { t } = useI18nUtils()
+const {isOpened} = useDialog(props.guid)
+const {t} = useI18nUtils()
 const contentStore = useContentStore()
 
 const form = ref<VForm>()
@@ -64,12 +64,13 @@ onBeforeMount(() => {
       <v-card-title>{{ t('dialogs.moveTorrentFile.title', 1 + Number(isFolder)) }}</v-card-title>
       <v-card-text>
         <v-form v-model="isFormValid" ref="form" @submit.prevent>
-          <v-text-field v-if="oldName" :model-value="oldName" disabled :label="$t('dialogs.moveTorrentFile.oldName')" />
-          <v-text-field v-model="formData.newName" ref="input" :rules="rules" autofocus :label="$t('dialogs.moveTorrent.newPath')" @keydown.enter="submit" />
+          <v-text-field v-if="oldName" :model-value="oldName" disabled :label="$t('dialogs.moveTorrentFile.oldName')"/>
+          <v-text-field v-model="formData.newName" ref="input" :rules="rules" autofocus
+                        :label="$t('dialogs.moveTorrent.newPath')" @keydown.enter="submit"/>
         </v-form>
       </v-card-text>
       <v-card-actions>
-        <v-spacer />
+        <v-spacer/>
         <v-btn color="error" @click="close">{{ $t('common.cancel') }}</v-btn>
         <v-btn color="accent" :disabled="!isFormValid" @click="submit">{{ $t('common.save') }}</v-btn>
       </v-card-actions>

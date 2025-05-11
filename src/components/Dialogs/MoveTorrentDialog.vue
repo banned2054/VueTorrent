@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import HistoryField from '@/components/Core/HistoryField.vue'
-import { useDialog } from '@/composables'
-import { HistoryKey } from '@/constants/vuetorrent'
-import { useTorrentStore } from '@/stores'
-import { computed, onBeforeMount, reactive, ref } from 'vue'
-import { useI18nUtils } from '@/composables'
-import { VForm } from 'vuetify/components/VForm'
+import {useDialog} from '@/composables'
+import {HistoryKey} from '@/constants/vuetorrent'
+import {useTorrentStore} from '@/stores'
+import {computed, onBeforeMount, reactive, ref} from 'vue'
+import {useI18nUtils} from '@/composables'
+import {VForm} from 'vuetify/components/VForm'
 
 const props = defineProps<{
   guid: string
@@ -13,8 +13,8 @@ const props = defineProps<{
   mode: 'dl' | 'save'
 }>()
 
-const { isOpened } = useDialog(props.guid)
-const { t } = useI18nUtils()
+const {isOpened} = useDialog(props.guid)
+const {t} = useI18nUtils()
 const torrentStore = useTorrentStore()
 
 const form = ref<VForm>()
@@ -63,19 +63,19 @@ onBeforeMount(() => {
       <v-card-title>{{ $t(`dialogs.moveTorrent.${mode}.title`) }}</v-card-title>
       <v-card-text>
         <v-form v-model="isFormValid" ref="form" @submit.prevent>
-          <v-text-field v-if="oldPath" :model-value="oldPath" disabled :label="$t('dialogs.moveTorrent.oldPath')" />
+          <v-text-field v-if="oldPath" :model-value="oldPath" disabled :label="$t('dialogs.moveTorrent.oldPath')"/>
           <HistoryField
-            v-model="formData.newPath"
-            :historyKey="HistoryKey.TORRENT_PATH"
-            ref="field"
-            :rules="rules"
-            autofocus
-            :label="$t('dialogs.moveTorrent.newPath')"
-            @keydown.enter="submit" />
+              v-model="formData.newPath"
+              :historyKey="HistoryKey.TORRENT_PATH"
+              ref="field"
+              :rules="rules"
+              autofocus
+              :label="$t('dialogs.moveTorrent.newPath')"
+              @keydown.enter="submit"/>
         </v-form>
       </v-card-text>
       <v-card-actions>
-        <v-spacer />
+        <v-spacer/>
         <v-btn color="error" @click="close">{{ $t('common.cancel') }}</v-btn>
         <v-btn color="accent" :disabled="!isFormValid" @click="submit">{{ $t('common.save') }}</v-btn>
       </v-card-actions>

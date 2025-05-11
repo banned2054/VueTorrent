@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import ConnectionStatusDialog from '@/components/Dialogs/ConnectionStatusDialog.vue'
-import { ConnectionStatus } from '@/constants/qbit'
-import { ThemeMode } from '@/constants/vuetorrent'
-import { useAppStore, useDialogStore, useMaindataStore, useVueTorrentStore } from '@/stores'
-import { computed } from 'vue'
-import { useI18nUtils } from '@/composables'
-import { toast } from 'vue3-toastify'
+import {ConnectionStatus} from '@/constants/qbit'
+import {ThemeMode} from '@/constants/vuetorrent'
+import {useAppStore, useDialogStore, useMaindataStore, useVueTorrentStore} from '@/stores'
+import {computed} from 'vue'
+import {useI18nUtils} from '@/composables'
+import {toast} from 'vue3-toastify'
 
-const { t } = useI18nUtils()
+const {t} = useI18nUtils()
 const appStore = useAppStore()
 const dialogStore = useDialogStore()
 const maindataStore = useMaindataStore()
@@ -40,7 +40,7 @@ const connectionStatusText = computed(() => {
       key = 'unknown'
   }
 
-  return t('navbar.side.bottom_actions.conn_status', { status: t(`constants.connectionStatus.${key}`) })
+  return t('navbar.side.bottom_actions.conn_status', {status: t(`constants.connectionStatus.${key}`)})
 })
 
 const themeIcon = computed(() => {
@@ -89,7 +89,7 @@ function openConfirmShutdownDialog() {
     <v-col class="d-flex justify-center">
       <v-tooltip :text="t('navbar.side.bottom_actions.logout')" location="top">
         <template v-slot:activator="{ props }">
-          <v-btn variant="plain" icon="mdi-exit-to-app" v-bind="props" @click="logout" />
+          <v-btn variant="plain" icon="mdi-exit-to-app" v-bind="props" @click="logout"/>
         </template>
       </v-tooltip>
     </v-col>
@@ -98,11 +98,11 @@ function openConfirmShutdownDialog() {
       <v-tooltip :text="t('navbar.side.bottom_actions.alt_speed')" location="top">
         <template v-slot:activator="{ props }">
           <v-btn
-            variant="plain"
-            :color="isAltSpeedEnabled ? 'accent' : undefined"
-            :icon="isAltSpeedEnabled ? 'mdi-speedometer-slow' : 'mdi-speedometer'"
-            v-bind="props"
-            @click="toggleAltSpeed" />
+              variant="plain"
+              :color="isAltSpeedEnabled ? 'accent' : undefined"
+              :icon="isAltSpeedEnabled ? 'mdi-speedometer-slow' : 'mdi-speedometer'"
+              v-bind="props"
+              @click="toggleAltSpeed"/>
         </template>
       </v-tooltip>
     </v-col>
@@ -110,7 +110,7 @@ function openConfirmShutdownDialog() {
     <v-col class="d-flex justify-center">
       <v-tooltip :text="connectionStatusText" location="top">
         <template v-slot:activator="{ props }">
-          <v-btn variant="plain" :icon="connectionStatusIcon" v-bind="props" @click="openConnectionStatusDialog" />
+          <v-btn variant="plain" :icon="connectionStatusIcon" v-bind="props" @click="openConnectionStatusDialog"/>
         </template>
       </v-tooltip>
     </v-col>
@@ -118,7 +118,7 @@ function openConfirmShutdownDialog() {
     <v-col class="d-flex justify-center">
       <v-tooltip :text="t('navbar.side.bottom_actions.dark_mode', vueTorrentStore.theme.mode)" location="top">
         <template v-slot:activator="{ props }">
-          <v-btn variant="plain" :icon="themeIcon" v-bind="props" @click="vueTorrentStore.toggleTheme()" />
+          <v-btn variant="plain" :icon="themeIcon" v-bind="props" @click="vueTorrentStore.toggleTheme()"/>
         </template>
       </v-tooltip>
     </v-col>

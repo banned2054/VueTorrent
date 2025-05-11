@@ -1,21 +1,21 @@
 <script setup lang="ts">
-import { formatTimeSec } from '@/helpers'
+import {formatTimeSec} from '@/helpers'
 import InfoBase from './InfoBase.vue'
-import { useTorrentDetailStore, useVueTorrentStore } from '@/stores'
-import { Torrent } from '@/types/vuetorrent'
-import { storeToRefs } from 'pinia'
+import {useTorrentDetailStore, useVueTorrentStore} from '@/stores'
+import {Torrent} from '@/types/vuetorrent'
+import {storeToRefs} from 'pinia'
 
 const props = defineProps<{ torrent: Torrent }>()
 
-const { properties } = storeToRefs(useTorrentDetailStore())
-const { dateFormat } = storeToRefs(useVueTorrentStore())
+const {properties} = storeToRefs(useTorrentDetailStore())
+const {dateFormat} = storeToRefs(useVueTorrentStore())
 
 const torrentValues = [
-  { title: 'added_on', getter: () => props.torrent.added_on },
-  { title: 'completed_on', getter: () => props.torrent.completed_on },
-  { title: 'creation_date', getter: () => properties.value?.creation_date ?? 0 },
-  { title: 'last_activity', getter: () => props.torrent.last_activity },
-  { title: 'seen_complete', getter: () => props.torrent.seen_complete }
+  {title: 'added_on', getter: () => props.torrent.added_on},
+  {title: 'completed_on', getter: () => props.torrent.completed_on},
+  {title: 'creation_date', getter: () => properties.value?.creation_date ?? 0},
+  {title: 'last_activity', getter: () => props.torrent.last_activity},
+  {title: 'seen_complete', getter: () => props.torrent.seen_complete}
 ]
 </script>
 

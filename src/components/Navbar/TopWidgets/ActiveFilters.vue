@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { useI18nUtils } from '@/composables'
-import { FilterState, TrackerSpecialFilter } from '@/constants/vuetorrent'
-import { getTorrentStateColor } from '@/helpers'
-import { useTorrentStore } from '@/stores'
-import { storeToRefs } from 'pinia'
-import { computed } from 'vue'
-import { useDisplay } from 'vuetify'
+import {useI18nUtils} from '@/composables'
+import {FilterState, TrackerSpecialFilter} from '@/constants/vuetorrent'
+import {getTorrentStateColor} from '@/helpers'
+import {useTorrentStore} from '@/stores'
+import {storeToRefs} from 'pinia'
+import {computed} from 'vue'
+import {useDisplay} from 'vuetify'
 
-const { mobile } = useDisplay()
-const { t, getTorrentStateString } = useI18nUtils()
+const {mobile} = useDisplay()
+const {t, getTorrentStateString} = useI18nUtils()
 const {
   isTextFilterActive,
   textFilter,
@@ -25,23 +25,29 @@ const {
 } = storeToRefs(useTorrentStore())
 
 const aggregatedTagFilters = computed(() => {
-  const included = Array.from(tagFilterInclude.value).map(tag => ({ value: tag, state: FilterState.INCLUDED }))
-  const excluded = Array.from(tagFilterExclude.value).map(tag => ({ value: tag, state: FilterState.EXCLUDED }))
+  const included = Array.from(tagFilterInclude.value).map(tag => ({value: tag, state: FilterState.INCLUDED}))
+  const excluded = Array.from(tagFilterExclude.value).map(tag => ({value: tag, state: FilterState.EXCLUDED}))
   return [...included, ...excluded]
 })
 const aggregatedTrackerFilters = computed(() => {
-  const included = Array.from(trackerFilterInclude.value).map(tracker => ({ value: tracker, state: FilterState.INCLUDED }))
-  const excluded = Array.from(trackerFilterExclude.value).map(tracker => ({ value: tracker, state: FilterState.EXCLUDED }))
+  const included = Array.from(trackerFilterInclude.value).map(tracker => ({
+    value: tracker,
+    state: FilterState.INCLUDED
+  }))
+  const excluded = Array.from(trackerFilterExclude.value).map(tracker => ({
+    value: tracker,
+    state: FilterState.EXCLUDED
+  }))
   return [...included, ...excluded]
 })
 
 const globalFilterActive = computed(
-  () =>
-    (isTextFilterActive.value && isTextFilterPresent.value) ||
-    (isStatusFilterActive.value && isStatusFilterPresent.value) ||
-    (isCategoryFilterActive.value && isCategoryFilterPresent.value) ||
-    (isTagFilterActive.value && isTagFilterPresent.value) ||
-    (isTrackerFilterActive.value && isTrackerFilterPresent.value)
+    () =>
+        (isTextFilterActive.value && isTextFilterPresent.value) ||
+        (isStatusFilterActive.value && isStatusFilterPresent.value) ||
+        (isCategoryFilterActive.value && isCategoryFilterPresent.value) ||
+        (isTagFilterActive.value && isTagFilterPresent.value) ||
+        (isTrackerFilterActive.value && isTrackerFilterPresent.value)
 )
 
 const isTextFilterPresent = computed(() => textFilter.value.length > 0)
@@ -53,7 +59,7 @@ const isTrackerFilterPresent = computed(() => aggregatedTrackerFilters.value.len
 const globalFilterColor = computed(() => (globalFilterActive.value ? 'active-global' : 'active-global-disabled'))
 const textFilterColor = computed(() => (isTextFilterActive.value ? 'active-text' : 'active-text-disabled'))
 const singleStatusFilterColor = computed(() =>
-  isStatusFilterActive.value ? getTorrentStateColor(statusFilter.value[0]) : `${getTorrentStateColor(statusFilter.value[0])}-darken-2`
+    isStatusFilterActive.value ? getTorrentStateColor(statusFilter.value[0]) : `${getTorrentStateColor(statusFilter.value[0])}-darken-2`
 )
 const statusFilterColor = computed(() => (isStatusFilterActive.value ? 'active-status' : 'active-status-disabled'))
 const categoryFilterColor = computed(() => (isCategoryFilterActive.value ? 'active-category' : 'active-category-disabled'))
@@ -61,21 +67,21 @@ const tagFilterColor = computed(() => (isTagFilterActive.value ? 'active-tag' : 
 const trackerFilterColor = computed(() => (isTrackerFilterActive.value ? 'active-tracker' : 'active-tracker-disabled'))
 
 const filterPresentCount = computed(
-  () =>
-    Number(isTextFilterPresent.value) +
-    Number(isStatusFilterPresent.value) +
-    Number(isCategoryFilterPresent.value) +
-    Number(isTagFilterPresent.value) +
-    Number(isTrackerFilterPresent.value)
+    () =>
+        Number(isTextFilterPresent.value) +
+        Number(isStatusFilterPresent.value) +
+        Number(isCategoryFilterPresent.value) +
+        Number(isTagFilterPresent.value) +
+        Number(isTrackerFilterPresent.value)
 )
 
 const filterActiveCount = computed(
-  () =>
-    Number(isTextFilterPresent.value && isTextFilterActive.value) +
-    Number(isStatusFilterPresent.value && isStatusFilterActive.value) +
-    Number(isCategoryFilterPresent.value && isCategoryFilterActive.value) +
-    Number(isTagFilterPresent.value && isTagFilterActive.value) +
-    Number(isTrackerFilterPresent.value && isTrackerFilterActive.value)
+    () =>
+        Number(isTextFilterPresent.value && isTextFilterActive.value) +
+        Number(isStatusFilterPresent.value && isStatusFilterActive.value) +
+        Number(isCategoryFilterPresent.value && isCategoryFilterActive.value) +
+        Number(isTagFilterPresent.value && isTagFilterActive.value) +
+        Number(isTrackerFilterPresent.value && isTrackerFilterActive.value)
 )
 
 function toggleAllFilters() {
@@ -146,20 +152,23 @@ function resetTrackerFilter() {
 </script>
 
 <template>
-  <v-menu close-delay="5" open-delay="0" :close-on-content-click="false" :open-on-click="mobile" open-on-hover open-on-focus>
+  <v-menu close-delay="5" open-delay="0" :close-on-content-click="false" :open-on-click="mobile" open-on-hover
+          open-on-focus>
     <template v-slot:activator="{ props }">
       <v-slide-x-transition>
         <v-chip
-          v-if="filterPresentCount > 0"
-          v-bind="props"
-          class="ml-6"
-          :color="globalFilterColor"
-          variant="elevated"
-          closable
-          @click="mobile ? undefined : toggleAllFilters()"
-          @click:close="resetAllFilters()">
+            v-if="filterPresentCount > 0"
+            v-bind="props"
+            class="ml-6"
+            :color="globalFilterColor"
+            variant="elevated"
+            closable
+            @click="mobile ? undefined : toggleAllFilters()"
+            @click:close="resetAllFilters()">
           <template v-slot:prepend>
-            <v-icon class="mr-1" @click.stop="mobile ? toggleAllFilters() : undefined">{{ globalFilterActive ? 'mdi-filter' : 'mdi-filter-off' }} </v-icon>
+            <v-icon class="mr-1" @click.stop="mobile ? toggleAllFilters() : undefined">
+              {{ globalFilterActive ? 'mdi-filter' : 'mdi-filter-off' }}
+            </v-icon>
           </template>
           {{ t('navbar.top.active_filters.menu_label', filterActiveCount) }}
         </v-chip>
@@ -167,38 +176,45 @@ function resetTrackerFilter() {
     </template>
 
     <div class="d-flex flex-column flex-gap-row mt-3">
-      <v-chip v-if="isTextFilterPresent" :color="textFilterColor" variant="elevated" closable @click="toggleTextFilter()" @click:close="resetTextFilter()">
+      <v-chip v-if="isTextFilterPresent" :color="textFilterColor" variant="elevated" closable
+              @click="toggleTextFilter()" @click:close="resetTextFilter()">
         <template v-slot:prepend>
-          <v-icon class="mr-1">{{ isTextFilterActive ? 'mdi-filter' : 'mdi-filter-off' }} </v-icon>
+          <v-icon class="mr-1">{{ isTextFilterActive ? 'mdi-filter' : 'mdi-filter-off' }}</v-icon>
         </template>
-        {{ t('navbar.top.active_filters.text', { value: textFilter }) }}
+        {{ t('navbar.top.active_filters.text', {value: textFilter}) }}
       </v-chip>
 
       <template v-if="isStatusFilterPresent">
-        <v-chip v-if="statusFilter.length === 1" :color="singleStatusFilterColor" variant="elevated" closable @click="toggleStatusFilter()" @click:close="resetStatusFilter()">
+        <v-chip v-if="statusFilter.length === 1" :color="singleStatusFilterColor" variant="elevated" closable
+                @click="toggleStatusFilter()" @click:close="resetStatusFilter()">
           <template v-slot:prepend>
-            <v-icon class="mr-1">{{ isStatusFilterActive ? 'mdi-filter' : 'mdi-filter-off' }} </v-icon>
+            <v-icon class="mr-1">{{ isStatusFilterActive ? 'mdi-filter' : 'mdi-filter-off' }}</v-icon>
           </template>
-          {{ t('navbar.top.active_filters.state', { value: getTorrentStateString(statusFilter[0]) }) }}
+          {{ t('navbar.top.active_filters.state', {value: getTorrentStateString(statusFilter[0])}) }}
         </v-chip>
-        <v-chip v-else :color="statusFilterColor" variant="elevated" closable @click="toggleStatusFilter()" @click:close="resetStatusFilter()">
+        <v-chip v-else :color="statusFilterColor" variant="elevated" closable @click="toggleStatusFilter()"
+                @click:close="resetStatusFilter()">
           <template v-slot:prepend>
-            <v-icon class="mr-1">{{ isStatusFilterActive ? 'mdi-filter' : 'mdi-filter-off' }} </v-icon>
+            <v-icon class="mr-1">{{ isStatusFilterActive ? 'mdi-filter' : 'mdi-filter-off' }}</v-icon>
           </template>
           {{ t('navbar.top.active_filters.multiple_state', statusFilter.length) }}
         </v-chip>
       </template>
 
       <template v-if="isCategoryFilterPresent">
-        <v-chip v-if="categoryFilter.length === 1" :color="categoryFilterColor" variant="elevated" closable @click="toggleCategoryFilter()" @click:close="resetCategoryFilter()">
+        <v-chip v-if="categoryFilter.length === 1" :color="categoryFilterColor" variant="elevated" closable
+                @click="toggleCategoryFilter()" @click:close="resetCategoryFilter()">
           <template v-slot:prepend>
             <v-icon class="mr-1">
               {{ isCategoryFilterActive ? 'mdi-filter' : 'mdi-filter-off' }}
             </v-icon>
           </template>
-          {{ t('navbar.top.active_filters.category', { value: categoryFilter[0] === '' ? t('navbar.side.filters.category.empty') : categoryFilter[0] }) }}
+          {{
+            t('navbar.top.active_filters.category', {value: categoryFilter[0] === '' ? t('navbar.side.filters.category.empty') : categoryFilter[0]})
+          }}
         </v-chip>
-        <v-chip v-else :color="categoryFilterColor" variant="elevated" closable @click="toggleCategoryFilter()" @click:close="resetCategoryFilter()">
+        <v-chip v-else :color="categoryFilterColor" variant="elevated" closable @click="toggleCategoryFilter()"
+                @click:close="resetCategoryFilter()">
           <template v-slot:prepend>
             <v-icon class="mr-1">
               {{ isCategoryFilterActive ? 'mdi-filter' : 'mdi-filter-off' }}
@@ -209,17 +225,23 @@ function resetTrackerFilter() {
       </template>
 
       <template v-if="isTagFilterPresent">
-        <v-chip v-if="aggregatedTagFilters.length === 1" :color="tagFilterColor" variant="elevated" closable @click="toggleTagFilter()" @click:close="resetTagFilter()">
+        <v-chip v-if="aggregatedTagFilters.length === 1" :color="tagFilterColor" variant="elevated" closable
+                @click="toggleTagFilter()" @click:close="resetTagFilter()">
           <template v-slot:prepend>
             <v-icon class="mr-1">
-              {{ isTagFilterActive ? (aggregatedTagFilters[0].state === FilterState.EXCLUDED ? 'mdi-filter-minus' : 'mdi-filter-plus') : 'mdi-filter-off' }}
+              {{
+                isTagFilterActive ? (aggregatedTagFilters[0].state === FilterState.EXCLUDED ? 'mdi-filter-minus' : 'mdi-filter-plus') : 'mdi-filter-off'
+              }}
             </v-icon>
           </template>
-          {{ t('navbar.top.active_filters.tag', { value: aggregatedTagFilters[0].value === null ? t('navbar.side.filters.tag.empty') : aggregatedTagFilters[0].value }) }}
+          {{
+            t('navbar.top.active_filters.tag', {value: aggregatedTagFilters[0].value === null ? t('navbar.side.filters.tag.empty') : aggregatedTagFilters[0].value})
+          }}
         </v-chip>
-        <v-chip v-else :color="tagFilterColor" variant="elevated" closable @click="toggleTagFilter()" @click:close="resetTagFilter()">
+        <v-chip v-else :color="tagFilterColor" variant="elevated" closable @click="toggleTagFilter()"
+                @click:close="resetTagFilter()">
           <template v-slot:prepend>
-            <v-icon class="mr-1">{{ isTagFilterActive ? 'mdi-filter' : 'mdi-filter-off' }} </v-icon>
+            <v-icon class="mr-1">{{ isTagFilterActive ? 'mdi-filter' : 'mdi-filter-off' }}</v-icon>
           </template>
           {{ t('navbar.top.active_filters.multiple_tag', aggregatedTagFilters.length) }}
         </v-chip>
@@ -227,24 +249,26 @@ function resetTrackerFilter() {
 
       <template v-if="isTrackerFilterPresent">
         <v-chip
-          v-if="aggregatedTrackerFilters.length === 1"
-          :color="trackerFilterColor"
-          variant="elevated"
-          closable
-          @click="toggleTrackerFilter()"
-          @click:close="resetTrackerFilter()">
+            v-if="aggregatedTrackerFilters.length === 1"
+            :color="trackerFilterColor"
+            variant="elevated"
+            closable
+            @click="toggleTrackerFilter()"
+            @click:close="resetTrackerFilter()">
           <template v-slot:prepend>
             <v-icon class="mr-1">
-              {{ isTrackerFilterActive ? (aggregatedTrackerFilters[0].state === FilterState.EXCLUDED ? 'mdi-filter-minus' : 'mdi-filter-plus') : 'mdi-filter-off' }}
+              {{
+                isTrackerFilterActive ? (aggregatedTrackerFilters[0].state === FilterState.EXCLUDED ? 'mdi-filter-minus' : 'mdi-filter-plus') : 'mdi-filter-off'
+              }}
             </v-icon>
           </template>
           <span v-if="aggregatedTrackerFilters[0].value === TrackerSpecialFilter.UNTRACKED">{{
-            t('navbar.top.active_filters.tracker', { value: t('navbar.side.filters.tracker.empty') })
-          }}</span>
+              t('navbar.top.active_filters.tracker', {value: t('navbar.side.filters.tracker.empty')})
+            }}</span>
           <span v-else-if="aggregatedTrackerFilters[0].value === TrackerSpecialFilter.NOT_WORKING">{{
-            t('navbar.top.active_filters.tracker', { value: t('navbar.side.filters.tracker.not_working') })
-          }}</span>
-          <span v-else>{{ t('navbar.top.active_filters.tracker', { value: aggregatedTrackerFilters[0].value }) }}</span>
+              t('navbar.top.active_filters.tracker', {value: t('navbar.side.filters.tracker.not_working')})
+            }}</span>
+          <span v-else>{{ t('navbar.top.active_filters.tracker', {value: aggregatedTrackerFilters[0].value}) }}</span>
         </v-chip>
         <v-chip v-else :color="trackerFilterColor" variant="elevated" closable @click:close="resetTrackerFilter()">
           <template v-slot:prepend>

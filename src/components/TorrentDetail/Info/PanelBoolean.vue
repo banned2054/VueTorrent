@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { useTorrentDetailStore, useTorrentStore } from '@/stores'
-import { Torrent } from '@/types/vuetorrent'
-import { storeToRefs } from 'pinia'
-import { computed } from 'vue'
+import {useTorrentDetailStore, useTorrentStore} from '@/stores'
+import {Torrent} from '@/types/vuetorrent'
+import {storeToRefs} from 'pinia'
+import {computed} from 'vue'
 import InfoBase from './InfoBase.vue'
 
 const props = defineProps<{ torrent: Torrent }>()
 
 const torrentStore = useTorrentStore()
-const { properties } = storeToRefs(useTorrentDetailStore())
+const {properties} = storeToRefs(useTorrentDetailStore())
 
 const auto_tmm = computed({
   get: () => props.torrent.auto_tmm,
@@ -48,37 +48,40 @@ const super_seeding = computed({
       <v-row>
         <InfoBase>
           <template v-slot:title>
-            <v-checkbox v-model="auto_tmm" hide-details density="compact" :label="$t('torrent.properties.auto_tmm')" />
+            <v-checkbox v-model="auto_tmm" hide-details density="compact" :label="$t('torrent.properties.auto_tmm')"/>
           </template>
         </InfoBase>
 
         <InfoBase>
           <template v-slot:title>
-            <v-checkbox v-model="f_l_piece_prio" hide-details density="compact" :label="$t('torrent.properties.f_l_piece_prio')" />
+            <v-checkbox v-model="f_l_piece_prio" hide-details density="compact"
+                        :label="$t('torrent.properties.f_l_piece_prio')"/>
           </template>
         </InfoBase>
 
         <InfoBase>
           <template v-slot:title>
-            <v-checkbox v-model="forced" hide-details density="compact" :label="$t('torrent.properties.forced')" />
+            <v-checkbox v-model="forced" hide-details density="compact" :label="$t('torrent.properties.forced')"/>
           </template>
         </InfoBase>
 
         <InfoBase>
           <template v-slot:title>
-            <v-checkbox v-model="seq_dl" hide-details density="compact" :label="$t('torrent.properties.seq_dl')" />
+            <v-checkbox v-model="seq_dl" hide-details density="compact" :label="$t('torrent.properties.seq_dl')"/>
           </template>
         </InfoBase>
 
         <InfoBase>
           <template v-slot:title>
-            <v-checkbox v-model="super_seeding" hide-details density="compact" :label="$t('torrent.properties.super_seeding')" />
+            <v-checkbox v-model="super_seeding" hide-details density="compact"
+                        :label="$t('torrent.properties.super_seeding')"/>
           </template>
         </InfoBase>
 
         <InfoBase>
           <template v-slot:title>
-            <v-checkbox disabled :model-value="properties?.is_private" hide-details density="compact" :label="$t('torrent.properties.is_private')" />
+            <v-checkbox disabled :model-value="properties?.is_private" hide-details density="compact"
+                        :label="$t('torrent.properties.is_private')"/>
           </template>
         </InfoBase>
       </v-row>

@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { useI18nUtils } from '@/composables'
-import { FilePriority } from '@/constants/qbit'
-import { doesCommand, formatData, getFileIcon } from '@/helpers'
-import { useContentStore, useVueTorrentStore } from '@/stores'
-import { TreeNode } from '@/types/vuetorrent'
-import { storeToRefs } from 'pinia'
-import { computed, triggerRef } from 'vue'
-import { useDisplay } from 'vuetify'
+import {useI18nUtils} from '@/composables'
+import {FilePriority} from '@/constants/qbit'
+import {doesCommand, formatData, getFileIcon} from '@/helpers'
+import {useContentStore, useVueTorrentStore} from '@/stores'
+import {TreeNode} from '@/types/vuetorrent'
+import {storeToRefs} from 'pinia'
+import {computed, triggerRef} from 'vue'
+import {useDisplay} from 'vuetify'
 
 const props = defineProps<{
   node: TreeNode
@@ -18,10 +18,10 @@ defineEmits<{
 
 const folderColor = '#ffe476'
 
-const { t } = useI18nUtils()
-const { mobile } = useDisplay()
+const {t} = useI18nUtils()
+const {mobile} = useDisplay()
 const contentStore = useContentStore()
-const { internalSelection, lastSelected, openedItems } = storeToRefs(contentStore)
+const {internalSelection, lastSelected, openedItems} = storeToRefs(contentStore)
 const vuetorrentStore = useVueTorrentStore()
 
 const depth = computed(() => {
@@ -90,31 +90,32 @@ function getNodeSubtitle(node: TreeNode) {
 
 <template>
   <div
-    :class="['d-flex flex-column py-2 pr-3', node.isSelected(internalSelection) ? 'selected' : '']"
-    :style="`padding-left: ${depth}px`"
-    @click.stop="toggleInternalSelection($event, node)"
-    @contextmenu="$emit('onRightClick', $event, node)">
+      :class="['d-flex flex-column py-2 pr-3', node.isSelected(internalSelection) ? 'selected' : '']"
+      :style="`padding-left: ${depth}px`"
+      @click.stop="toggleInternalSelection($event, node)"
+      @contextmenu="$emit('onRightClick', $event, node)">
     <div class="d-flex">
       <!-- Selection checkbox -->
       <div class="d-flex align-center" @click.stop="contentStore.toggleFileSelection(node)">
-        <v-icon v-if="node.priority === FilePriority.MIXED" :color="getNodeColor(node)" icon="mdi-checkbox-intermediate-variant" />
-        <v-icon v-else-if="node.wanted" :color="getNodeColor(node)" icon="mdi-checkbox-marked" />
-        <v-icon v-else :color="getNodeColor(node)" icon="mdi-checkbox-blank-outline" />
+        <v-icon v-if="node.priority === FilePriority.MIXED" :color="getNodeColor(node)"
+                icon="mdi-checkbox-intermediate-variant"/>
+        <v-icon v-else-if="node.wanted" :color="getNodeColor(node)" icon="mdi-checkbox-marked"/>
+        <v-icon v-else :color="getNodeColor(node)" icon="mdi-checkbox-blank-outline"/>
       </div>
 
       <!-- Node icon -->
       <div
-        v-if="node.type === 'folder'"
-        class="d-flex align-center spacer cursor-pointer"
-        @click="openedItems.has(node.fullName) ? contentStore.closeNode($event, node) : contentStore.openNode($event, node)">
+          v-if="node.type === 'folder'"
+          class="d-flex align-center spacer cursor-pointer"
+          @click="openedItems.has(node.fullName) ? contentStore.closeNode($event, node) : contentStore.openNode($event, node)">
         <v-icon>{{ openedItems.has(node.fullName) ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
 
-        <v-icon v-if="node.fullName === ''" icon="mdi-file-tree" />
-        <v-icon v-else-if="openedItems.has(node.fullName)" icon="mdi-folder-open" :color="folderColor" />
-        <v-icon v-else icon="mdi-folder" :color="folderColor" />
+        <v-icon v-if="node.fullName === ''" icon="mdi-file-tree"/>
+        <v-icon v-else-if="openedItems.has(node.fullName)" icon="mdi-folder-open" :color="folderColor"/>
+        <v-icon v-else icon="mdi-folder" :color="folderColor"/>
       </div>
       <div v-else class="d-flex align-center spacer">
-        <v-icon :icon="getFileIcon(node.name)" />
+        <v-icon :icon="getFileIcon(node.name)"/>
       </div>
 
       <!-- Node content -->
@@ -125,7 +126,7 @@ function getNodeSubtitle(node: TreeNode) {
         </div>
       </div>
 
-      <v-spacer />
+      <v-spacer/>
 
       <!-- Priority icon -->
       <div class="d-flex align-center">
@@ -136,7 +137,7 @@ function getNodeSubtitle(node: TreeNode) {
         <v-icon v-else-if="node.priority === FilePriority.DO_NOT_DOWNLOAD" color="grey">mdi-cancel</v-icon>
       </div>
     </div>
-    <v-progress-linear :model-value="node.progress" :max="1" :color="getNodeColor(node)" rounded="sm" />
+    <v-progress-linear :model-value="node.progress" :max="1" :color="getNodeColor(node)" rounded="sm"/>
   </div>
 </template>
 

@@ -1,8 +1,8 @@
 <script setup lang="ts" generic="T">
-import { useI18nUtils } from '@/composables'
-import { FilterState, FilterType } from '@/constants/vuetorrent'
-import { arrayRemove } from '@/helpers'
-import { computed } from 'vue'
+import {useI18nUtils} from '@/composables'
+import {FilterState, FilterType} from '@/constants/vuetorrent'
+import {arrayRemove} from '@/helpers'
+import {computed} from 'vue'
 
 defineProps<{
   title: string
@@ -15,10 +15,10 @@ defineEmits<{
   toggleFilterType: () => void
 }>()
 
-const includeValues = defineModel<Array<T>>('include', { required: true })
-const excludeValues = defineModel<Array<T>>('exclude', { required: true })
+const includeValues = defineModel<Array<T>>('include', {required: true})
+const excludeValues = defineModel<Array<T>>('exclude', {required: true})
 
-const { t } = useI18nUtils()
+const {t} = useI18nUtils()
 
 const filterCount = computed(() => includeValues.value.length + excludeValues.value.length)
 
@@ -85,25 +85,27 @@ function disableFilter(value: T) {
       {{ title }}
     </v-list-item-title>
     <v-select
-      :model-value="[...includeValues, ...excludeValues]"
-      :items="items"
-      :placeholder="t('navbar.side.filters.disabled')"
-      bg-color="secondary"
-      class="text-accent pt-1"
-      density="compact"
-      hide-details
-      multiple
-      variant="solo">
+        :model-value="[...includeValues, ...excludeValues]"
+        :items="items"
+        :placeholder="t('navbar.side.filters.disabled')"
+        bg-color="secondary"
+        class="text-accent pt-1"
+        density="compact"
+        hide-details
+        multiple
+        variant="solo">
       <template #prepend>
-        <v-tooltip location="right" :text="t(filterType === FilterType.CONJUNCTIVE ? 'constants.filter_type.conjunctive' : 'constants.filter_type.disjunctive')">
+        <v-tooltip location="right"
+                   :text="t(filterType === FilterType.CONJUNCTIVE ? 'constants.filter_type.conjunctive' : 'constants.filter_type.disjunctive')">
           <template #activator="{ props }">
-            <v-icon v-bind="props" :icon="filterType === FilterType.CONJUNCTIVE ? 'mdi-set-center' : 'mdi-set-all'" @click="$emit('toggleFilterType')" />
+            <v-icon v-bind="props" :icon="filterType === FilterType.CONJUNCTIVE ? 'mdi-set-center' : 'mdi-set-all'"
+                    @click="$emit('toggleFilterType')"/>
           </template>
         </v-tooltip>
       </template>
       <template v-slot:prepend-item>
-        <v-list-item :title="t('common.disable')" @click="$emit('disable')" />
-        <v-divider />
+        <v-list-item :title="t('common.disable')" @click="$emit('disable')"/>
+        <v-divider/>
       </template>
       <template v-slot:selection="{ item, index }">
         <span v-if="index === 0 && filterCount === 1" class="text-accent">
@@ -114,9 +116,10 @@ function disableFilter(value: T) {
         </span>
       </template>
       <template #item="{ item }">
-        <v-list-item :title="item.title" :class="getClassColor(item.value)" @click="toggleValue(item.value)" @contextmenu="disableFilter(item.value)">
+        <v-list-item :title="item.title" :class="getClassColor(item.value)" @click="toggleValue(item.value)"
+                     @contextmenu="disableFilter(item.value)">
           <template #prepend>
-            <v-icon :icon="getIcon(item.value)" />
+            <v-icon :icon="getIcon(item.value)"/>
           </template>
         </v-list-item>
       </template>

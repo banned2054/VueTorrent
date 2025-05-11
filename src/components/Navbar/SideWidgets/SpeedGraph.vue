@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { formatSpeed } from '@/helpers'
+import {formatSpeed} from '@/helpers'
 import dayjs from '@/plugins/dayjs'
-import { useMaindataStore, useNavbarStore, useVueTorrentStore } from '@/stores'
-import { ApexOptions } from 'apexcharts'
-import { storeToRefs } from 'pinia'
-import { computed, ref } from 'vue'
-import { useI18nUtils } from '@/composables'
+import {useMaindataStore, useNavbarStore, useVueTorrentStore} from '@/stores'
+import {ApexOptions} from 'apexcharts'
+import {storeToRefs} from 'pinia'
+import {computed, ref} from 'vue'
+import {useI18nUtils} from '@/composables'
 import VueApexCharts from 'vue3-apexcharts'
-import { useTheme } from 'vuetify'
+import {useTheme} from 'vuetify'
 
-const { t } = useI18nUtils()
+const {t} = useI18nUtils()
 const theme = useTheme()
-const { serverState } = storeToRefs(useMaindataStore())
+const {serverState} = storeToRefs(useMaindataStore())
 const navbarStore = useNavbarStore()
 const vuetorrentStore = useVueTorrentStore()
 const chart = ref<ApexCharts>()
@@ -87,7 +87,7 @@ const series = computed(() => [
 </script>
 
 <template>
-  <VueApexCharts ref="chart" type="area" :options="chartOptions" :series="series" />
+  <VueApexCharts ref="chart" type="area" :options="chartOptions" :series="series"/>
 </template>
 
 <style scoped></style>

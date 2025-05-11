@@ -1,14 +1,14 @@
 <script lang="ts" setup>
 import AddTorrentDialog from '@/components/Dialogs/AddTorrentDialog.vue'
 import ConfirmDeleteDialog from '@/components/Dialogs/Confirm/ConfirmDeleteDialog.vue'
-import { useI18nUtils } from '@/composables'
-import { useDashboardStore, useDialogStore, useRssStore, useTorrentStore } from '@/stores'
-import { computed } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import {useI18nUtils} from '@/composables'
+import {useDashboardStore, useDialogStore, useRssStore, useTorrentStore} from '@/stores'
+import {computed} from 'vue'
+import {useRoute, useRouter} from 'vue-router'
 import TopActions from './TopActions.vue'
 import TopOverflow from './TopOverflow.vue'
 
-const { t } = useI18nUtils()
+const {t} = useI18nUtils()
 const route = useRoute()
 const router = useRouter()
 const dashboardStore = useDashboardStore()
@@ -29,7 +29,7 @@ async function resumeTorrents() {
   }
 
   if (!hashes.value.length) {
-    dialogStore.confirmAction({ title: t('dialogs.confirm.startAll'), yesColor: 'accent', onConfirm })
+    dialogStore.confirmAction({title: t('dialogs.confirm.startAll'), yesColor: 'accent', onConfirm})
   } else {
     await onConfirm()
   }
@@ -41,7 +41,7 @@ async function pauseTorrents() {
   }
 
   if (!hashes.value.length) {
-    dialogStore.confirmAction({ title: t('dialogs.confirm.stopAll'), yesColor: 'accent', onConfirm })
+    dialogStore.confirmAction({title: t('dialogs.confirm.stopAll'), yesColor: 'accent', onConfirm})
   } else {
     await onConfirm()
   }
@@ -50,59 +50,59 @@ async function pauseTorrents() {
 function deleteTorrents() {
   if (!hashes.value.length) return
 
-  dialogStore.createDialog(ConfirmDeleteDialog, { hashes: [...hashes.value] })
+  dialogStore.createDialog(ConfirmDeleteDialog, {hashes: [...hashes.value]})
 }
 
 function openSearchEngine() {
-  router.push({ name: 'searchEngine' })
+  router.push({name: 'searchEngine'})
 }
 
 function openRssArticles() {
-  router.push({ name: 'rssArticles', params: { tab: rssStore.lastView } })
+  router.push({name: 'rssArticles', params: {tab: rssStore.lastView}})
 }
 
 function openTorrentCreator() {
-  router.push({ name: 'torrentCreator' })
+  router.push({name: 'torrentCreator'})
 }
 
 function openLogs() {
-  router.push({ name: 'logs' })
+  router.push({name: 'logs'})
 }
 
 function openSettings() {
-  router.push({ name: 'settings' })
+  router.push({name: 'settings'})
 }
 </script>
 
 <template>
   <v-tooltip :text="$t('topbar.addTorrents')" location="bottom">
     <template v-slot:activator="{ props }">
-      <v-btn icon="mdi-plus" v-bind="props" @click="openAddTorrentDialog" />
+      <v-btn icon="mdi-plus" v-bind="props" @click="openAddTorrentDialog"/>
     </template>
   </v-tooltip>
 
-  <v-divider inset vertical />
+  <v-divider inset vertical/>
 
   <TopOverflow
-    v-if="$vuetify.display.smAndDown"
-    @deleteTorrents="deleteTorrents"
-    @openLogs="openLogs"
-    @openSearchEngine="openSearchEngine"
-    @openSettings="openSettings"
-    @openRssArticles="openRssArticles"
-    @openTorrentCreator="openTorrentCreator"
-    @pauseTorrents="pauseTorrents"
-    @resumeTorrents="resumeTorrents" />
+      v-if="$vuetify.display.smAndDown"
+      @deleteTorrents="deleteTorrents"
+      @openLogs="openLogs"
+      @openSearchEngine="openSearchEngine"
+      @openSettings="openSettings"
+      @openRssArticles="openRssArticles"
+      @openTorrentCreator="openTorrentCreator"
+      @pauseTorrents="pauseTorrents"
+      @resumeTorrents="resumeTorrents"/>
   <TopActions
-    v-else
-    @deleteTorrents="deleteTorrents"
-    @openLogs="openLogs"
-    @openSearchEngine="openSearchEngine"
-    @openSettings="openSettings"
-    @openRssArticles="openRssArticles"
-    @openTorrentCreator="openTorrentCreator"
-    @pauseTorrents="pauseTorrents"
-    @resumeTorrents="resumeTorrents" />
+      v-else
+      @deleteTorrents="deleteTorrents"
+      @openLogs="openLogs"
+      @openSearchEngine="openSearchEngine"
+      @openSettings="openSettings"
+      @openRssArticles="openRssArticles"
+      @openTorrentCreator="openTorrentCreator"
+      @pauseTorrents="pauseTorrents"
+      @resumeTorrents="resumeTorrents"/>
 </template>
 
 <style scoped></style>

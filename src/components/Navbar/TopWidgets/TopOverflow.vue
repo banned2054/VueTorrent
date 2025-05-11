@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { useAppStore } from '@/stores'
-import { storeToRefs } from 'pinia'
+import {useAppStore} from '@/stores'
+import {storeToRefs} from 'pinia'
 
 defineEmits(['resumeTorrents', 'pauseTorrents', 'deleteTorrents', 'openSearchEngine', 'openRssArticles', 'openTorrentCreator', 'openLogs', 'openSettings'])
 
-const { usesQbit5 } = storeToRefs(useAppStore())
+const {usesQbit5} = storeToRefs(useAppStore())
 </script>
 
 <template>
@@ -31,7 +31,7 @@ const { usesQbit5 } = storeToRefs(useAppStore())
         </template>
       </v-list-item>
 
-      <v-divider />
+      <v-divider/>
 
       <v-list-item :title="$t('topbar.overflow.searchEngine')" @click="$emit('openSearchEngine')">
         <template v-slot:prepend>

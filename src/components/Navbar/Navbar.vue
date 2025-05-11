@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { useDashboardStore, useNavbarStore, useVueTorrentStore } from '@/stores'
-import { storeToRefs } from 'pinia'
-import { computed } from 'vue';
-import { useRouter } from 'vue-router'
+import {useDashboardStore, useNavbarStore, useVueTorrentStore} from '@/stores'
+import {storeToRefs} from 'pinia'
+import {computed} from 'vue';
+import {useRouter} from 'vue-router'
 import BottomActions from './SideWidgets/BottomActions.vue'
 import CurrentSpeed from './SideWidgets/CurrentSpeed.vue'
 import Filters from './SideWidgets/Filters.vue'
@@ -15,14 +15,22 @@ import TorrentSearchbar from '@/components/TorrentSearchbar.vue'
 
 const router = useRouter()
 const dashboardStore = useDashboardStore()
-const { isDrawerOpen } = storeToRefs(useNavbarStore())
-const { isDrawerRight, showCurrentSpeed, showSpeedGraph, showAlltimeStat, showSessionStat, showFreeSpace, showFilterState, showFilterCategory, showFilterTag, showFilterTracker } = storeToRefs(useVueTorrentStore())
+const {isDrawerOpen} = storeToRefs(useNavbarStore())
+const {
+  isDrawerRight,
+  showCurrentSpeed,
+  showSpeedGraph,
+  showSessionStat,
+  showFreeSpace,
+  showFilterState,
+  showFilterTag,
+  showFilterTracker
+} = storeToRefs(useVueTorrentStore())
 
 const showFilters = computed(() =>
-  showFilterState.value ||
-  showFilterCategory.value ||
-  showFilterTag.value ||
-  showFilterTracker.value
+    showFilterState.value ||
+    showFilterTag.value ||
+    showFilterTracker.value
 );
 
 const toggleDrawer = () => {
@@ -30,35 +38,32 @@ const toggleDrawer = () => {
 }
 
 const goHome = () => {
-  router.push({ name: 'dashboard' })
+  router.push({name: 'dashboard'})
 }
 </script>
 
 <template>
-  <v-navigation-drawer class="ios-padding" v-model="isDrawerOpen" :location="isDrawerRight ? 'right' : 'left'" color="navbar" disable-route-watcher>
+  <v-navigation-drawer class="ios-padding" v-model="isDrawerOpen" :location="isDrawerRight ? 'right' : 'left'"
+                       color="navbar" disable-route-watcher>
     <v-list class="clean-px px-2 pt-0">
       <v-list-item v-if="showCurrentSpeed">
-        <CurrentSpeed />
+        <CurrentSpeed/>
       </v-list-item>
 
       <v-list-item v-if="showSpeedGraph">
-        <SpeedGraph />
-      </v-list-item>
-
-      <v-list-item v-if="showAlltimeStat">
-        <TransferStats :session="false" />
+        <SpeedGraph/>
       </v-list-item>
 
       <v-list-item v-if="showSessionStat">
-        <TransferStats :session="true" />
+        <TransferStats :session="true"/>
       </v-list-item>
 
       <v-list-item v-if="showFreeSpace">
-        <FreeSpace />
+        <FreeSpace/>
       </v-list-item>
 
       <v-list-item v-if="showFilters">
-        <Filters />
+        <Filters/>
       </v-list-item>
 
       <v-list-item density="compact">
@@ -68,23 +73,23 @@ const goHome = () => {
       </v-list-item>
     </v-list>
     <template v-slot:append>
-      <BottomActions />
+      <BottomActions/>
     </template>
   </v-navigation-drawer>
 
   <v-app-bar class="ios-padding">
-    <v-app-bar-nav-icon @click="toggleDrawer" />
+    <v-app-bar-nav-icon @click="toggleDrawer"/>
     <div class="title-wrapper cursor-pointer" @click="goHome">
       <span v-if="$vuetify.display.smAndUp" class="text-accent">Vue</span>
       <span v-if="$vuetify.display.smAndUp">Torrent</span>
     </div>
 
-    <ActiveFilters />
+    <ActiveFilters/>
 
-    <TorrentSearchbar v-if="$vuetify.display.lgAndUp" bg-color="background" class="px-6" />
-    <v-spacer v-else />
+    <TorrentSearchbar v-if="$vuetify.display.lgAndUp" bg-color="background" class="px-6"/>
+    <v-spacer v-else/>
 
-    <TopContainer />
+    <TopContainer/>
   </v-app-bar>
 </template>
 
@@ -93,6 +98,7 @@ const goHome = () => {
   padding-inline-start: 0 !important;
   padding-inline-end: 0 !important;
 }
+
 .title-wrapper {
   display: inline-flex;
   width: min-content;

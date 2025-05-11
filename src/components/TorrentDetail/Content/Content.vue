@@ -1,18 +1,27 @@
 <script setup lang="ts">
 import ContentFilterDialog from '@/components/Dialogs/ContentFilterDialog.vue'
-import { useContentStore, useDialogStore } from '@/stores'
-import { Torrent, TreeNode } from '@/types/vuetorrent'
-import { storeToRefs } from 'pinia'
-import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
-import { useDisplay } from 'vuetify'
-import { VVirtualScroll } from 'vuetify/components/VVirtualScroll'
+import {useContentStore, useDialogStore} from '@/stores'
+import {Torrent, TreeNode} from '@/types/vuetorrent'
+import {storeToRefs} from 'pinia'
+import {computed, nextTick, onBeforeUnmount, onMounted, ref, watch} from 'vue'
+import {useDisplay} from 'vuetify'
+import {VVirtualScroll} from 'vuetify/components/VVirtualScroll'
 import ContentNode from './ContentNode.vue'
 
 const props = defineProps<{ torrent: Torrent; isActive: boolean }>()
 
-const { height: deviceHeight } = useDisplay()
+const {height: deviceHeight} = useDisplay()
 const contentStore = useContentStore()
-const { rightClickProperties, filenameFilter, flatTree, internalSelection, selectedNodes, lastSelected, timerForcedPause, isTimerActive } = storeToRefs(contentStore)
+const {
+  rightClickProperties,
+  filenameFilter,
+  flatTree,
+  internalSelection,
+  selectedNodes,
+  lastSelected,
+  timerForcedPause,
+  isTimerActive
+} = storeToRefs(contentStore)
 const dialogStore = useDialogStore()
 
 const scrollView = ref<VVirtualScroll>()
@@ -60,14 +69,14 @@ function endPress() {
 // END mobile long press
 
 watch(
-  () => props.isActive,
-  isActive => {
-    if (isActive && !timerForcedPause.value) contentStore.resumeTimer()
-    else contentStore.pauseTimer()
-  },
-  {
-    immediate: true
-  }
+    () => props.isActive,
+    isActive => {
+      if (isActive && !timerForcedPause.value) contentStore.resumeTimer()
+      else contentStore.pauseTimer()
+    },
+    {
+      immediate: true
+    }
 )
 
 onMounted(() => {
@@ -146,17 +155,19 @@ function handleKeyboardInput(e: KeyboardEvent) {
 <template>
   <v-card>
     <div class="mt-2 mx-3 d-flex flex-gap align-center">
-      <v-text-field v-model="filenameFilter" hide-details clearable :placeholder="$t('torrentDetail.content.filter_placeholder')" @keydown.stop />
+      <v-text-field v-model="filenameFilter" hide-details clearable
+                    :placeholder="$t('torrentDetail.content.filter_placeholder')" @keydown.stop/>
 
       <v-tooltip :text="$t('torrentDetail.content.filter.activator')" location="bottom">
         <template #activator="{ props }">
-          <v-btn v-bind="props" icon="mdi-select-multiple" color="primary" @click="openFilterDialog" />
+          <v-btn v-bind="props" icon="mdi-select-multiple" color="primary" @click="openFilterDialog"/>
         </template>
       </v-tooltip>
 
       <v-tooltip :text="isTimerActive ? $t('common.pause') : $t('common.resume')" location="bottom">
         <template #activator="{ props }">
-          <v-btn v-bind="props" :icon="isTimerActive ? 'mdi-timer-pause' : 'mdi-timer-play'" color="primary" @click="isTimerActive ? pause() : resume()" />
+          <v-btn v-bind="props" :icon="isTimerActive ? 'mdi-timer-pause' : 'mdi-timer-play'" color="primary"
+                 @click="isTimerActive ? pause() : resume()"/>
         </template>
       </v-tooltip>
     </div>
@@ -164,12 +175,12 @@ function handleKeyboardInput(e: KeyboardEvent) {
     <v-virtual-scroll ref="scrollView" :items="flatTree" :height="height" item-height="68" class="pa-2">
       <template #default="{ item }">
         <ContentNode
-          :node="item"
-          @touchcancel="endPress"
-          @touchend="endPress"
-          @touchmove="endPress"
-          @touchstart="startPress($event.touches.item(0)!, item)"
-          @onRightClick="(e, node) => onRightClick(e, node)" />
+            :node="item"
+            @touchcancel="endPress"
+            @touchend="endPress"
+            @touchmove="endPress"
+            @touchstart="startPress($event.touches.item(0)!, item)"
+            @onRightClick="(e, node) => onRightClick(e, node)"/>
       </template>
     </v-virtual-scroll>
   </v-card>
