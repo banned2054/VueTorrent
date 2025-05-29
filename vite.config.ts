@@ -15,6 +15,9 @@ export default defineConfig(({ mode }) => {
     base: './',
     build: {
       target: 'esnext',
+      minify: 'esbuild',
+      cssMinify: 'lightningcss',
+      sourcemap: false,
       outDir: mode === 'demo' ? './vuetorrent-demo' : './vuetorrent/public',
       rollupOptions: {
         output: {

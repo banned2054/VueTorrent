@@ -23,7 +23,8 @@ updates:
       framework:
         patterns:
         - '@vue/*'
-        - 'vue*'
-      other:
-        patterns:
-        - '*'
+        - '*vue*'
+        - '*vuetify*'
+        - '*pinia*'
+      patch:
+        update-types: ["patch"]

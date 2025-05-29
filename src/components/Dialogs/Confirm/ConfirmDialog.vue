@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useDialog, useI18nUtils } from '@/composables'
+import { onMounted, onUnmounted } from 'vue'
 
 const props = defineProps<{
   guid: string
@@ -32,6 +33,25 @@ function onConfirm() {
   close()
   emit('confirm')
 }
+
+function handleKeyboardShortcuts(e: KeyboardEvent) {
+  if (e.key === 'Enter') {
+    e.preventDefault()
+    onConfirm()
+  } else if (e.key === 'Escape') {
+    e.preventDefault()
+    e.stopPropagation()
+    onCancel()
+  }
+}
+
+onMounted(() => {
+  document.addEventListener('keydown', handleKeyboardShortcuts)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('keydown', handleKeyboardShortcuts)
+})
 </script>
 
 <template>
@@ -42,7 +62,7 @@ function onConfirm() {
       <v-card-text v-if="$slots.default">
         <slot />
       </v-card-text>
-      <v-card-text v-else-if="text">
+      <v-card-text v-else-if="text" class="text-pre">
         {{ text }}
       </v-card-text>
 
